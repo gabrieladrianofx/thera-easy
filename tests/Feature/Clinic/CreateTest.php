@@ -89,3 +89,19 @@ it('should fail to create a clinic with a duplicate email.', function () {
     $request->assertSessionHasErrors('email');
     assertDatabaseCount('clinics', 1);
 });
+
+it('should fail to create a clinic when the email is not of type email', function () {
+    $user = User::factory()->create();
+    actingAs($user);
+
+    $response = post(route('clinic.store', [
+        'name_clinic' => 'medical clinical one',
+        'CNPJ'        => str_repeat('1', 14),
+        'email'       => 'invalid-email',
+    ]));
+
+    $response->assertSessionHasErrors([
+        'email' => __('validation.email', ['attribute' => 'email']),
+    ]);
+    assertDatabaseCount('clinics', 0);
+});
