@@ -11,7 +11,7 @@ class ClinicController extends Controller
     {
         Clinic::query()->create(request()->validate([
             'name_clinic' => ['required'],
-            'CNPJ'        => ['required', 'unique:clinics'],
+            'CNPJ'        => ['required', 'unique:clinics', 'size:14'],
             'email'       => ['required'],
         ]));
 

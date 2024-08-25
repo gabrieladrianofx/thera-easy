@@ -55,3 +55,17 @@ it('should fail to create a clinic with a duplicate CNPJ.', function () {
     $request->assertSessionHasErrors('CNPJ');
     assertDatabaseCount('clinics', 1);
 });
+
+it('should fail to create a clinic with a CNPJ not equal to 14 characters', function () {
+    $user = User::factory()->create();
+    actingAs($user);
+
+    $response = post(route('clinic.store', [
+        'name_clinic' => 'medical clinical one',
+        'CNPJ'        => str_repeat('1', 15),
+        'email'       => 'medicalclinicone@example.com',
+    ]));
+
+    $response->assertSessionHasErrors('CNPJ');
+    assertDatabaseCount('clinics', 0);
+});
