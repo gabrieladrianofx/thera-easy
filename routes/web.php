@@ -1,9 +1,15 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\{Auth, Route};
 
 Route::get('/', function () {
+    if(app()->isLocal()) {
+        Auth::loginUsingId(1);
+
+        return to_route('dashboard');
+    }
+
     return view('welcome');
 });
 
