@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\{ClinicController, ProfileController};
 use Illuminate\Support\Facades\{Auth, Route};
 
 Route::get('/', function () {
@@ -16,6 +16,8 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::post('/clinic/store', [ClinicController::class, 'store'])->name('clinic.store');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
