@@ -21,3 +21,17 @@ it('should be Able to create a clinic successfully with valid data', function ()
         'email'       => 'medicalclinicone@example.com',
     ]);
 });
+
+it('should fail when trying to create a clinic without providing the name_clinic, CNPJ and email', function () {
+    $user = User::factory()->create();
+    actingAs($user);
+
+    $request = post(route('clinic.store', [
+        'name_clinic' => '',
+        'CNPJ'        => '',
+        'email'       => '',
+    ]));
+
+    $request->assertSessionHasErrors(['name_clinic', 'CNPJ', 'email']);
+    assertDatabaseCount('clinics', 0);
+});
