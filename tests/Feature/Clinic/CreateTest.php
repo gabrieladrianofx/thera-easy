@@ -35,3 +35,23 @@ it('should fail when trying to create a clinic without providing the name_clinic
     $request->assertSessionHasErrors(['name_clinic', 'CNPJ', 'email']);
     assertDatabaseCount('clinics', 0);
 });
+
+it('should fail to create a clinic with a duplicate CNPJ.', function () {
+    $user = User::factory()->create();
+    actingAs($user);
+
+    post(route('clinic.store', [
+        'name_clinic' => 'medical clinical one',
+        'CNPJ'        => '12345678912345',
+        'email'       => 'medicalclinicone@example.com',
+    ]));
+
+    $request = post(route('clinic.store', [
+        'name_clinic' => 'medical clinical two',
+        'CNPJ'        => '12345678912345',
+        'email'       => 'medicalclinictwo@example.com',
+    ]));
+
+    $request->assertSessionHasErrors('CNPJ');
+    assertDatabaseCount('clinics', 1);
+});
