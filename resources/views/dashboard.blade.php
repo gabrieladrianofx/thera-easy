@@ -24,16 +24,18 @@
                         </div>
                         <input type="text" id="name_clinic" name="name_clinic"
                             class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 ps-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-                            placeholder="Medical Clinical Example">
+                            placeholder="Medical Clinical Example" required />
                     </div>
                 </div>
+
                 <div class="mb-5">
-                    <label for="cnpj" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Your
+                    <label for="CNPJ" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Your
                         CNPJ</label>
-                    <input type="text" id="cnpj" name="cnpj"
+                    <input type="text" id="CNPJ" name="CNPJ"
                         class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:shadow-sm-light dark:focus:border-blue-500 dark:focus:ring-blue-500"
                         required />
                 </div>
+
                 <div class="mb-5">
                     <label for="email" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Your
                         Email</label>
@@ -49,14 +51,63 @@
                         </div>
                         <input type="text" id="email" name="email"
                             class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 ps-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-                            placeholder="name@example.com">
+                            placeholder="name@example.com" required />
                     </div>
                 </div>
+
                 <button type="submit"
                     class="rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save</button>
                 <button type="reset"
                     class="rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Cancel</button>
             </form>
+
+            <hr class="my-4 border-dashed border-gray-700">
+
+            {{-- listagem --}}
+            <div class="dark: mb-1 font-bold uppercase text-gray-400">List of Clinics</div>
+
+            <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                <table class="w-full text-left text-sm text-gray-500 rtl:text-right dark:text-gray-400">
+                    <thead class="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">
+                                Name of The Clinic
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                CNPJ
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Email
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Actions
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($clinics as $clinic)
+                            <tr
+                                class="border-b odd:bg-white even:bg-gray-50 dark:border-gray-700 odd:dark:bg-gray-900 even:dark:bg-gray-800">
+                                <th scope="row"
+                                    class="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                                    {{ $clinic->name_clinic }}
+                                </th>
+                                <td class="px-6 py-4">
+                                    {{ $clinic->CNPJ }}
+                                </td>
+                                <td class="px-6 py-4">
+                                    {{ $clinic->email }}
+                                </td>
+                                <td class="px-6 py-4">
+                                    <a href="#"
+                                        class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+
         </div>
     </div>
 </x-app-layout>

@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\{ClinicController, ProfileController};
+use App\Http\Controllers\{ClinicController, DashboardController, ProfileController};
 use Illuminate\Support\Facades\{Auth, Route};
 
 Route::get('/', function () {
@@ -13,9 +13,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', DashboardController::class)->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::post('/clinic/store', [ClinicController::class, 'store'])->name('clinic.store');
 
