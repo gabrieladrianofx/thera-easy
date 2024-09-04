@@ -99,7 +99,7 @@
                                     {{ $clinic->email }}
                                 </td>
                                 <td class="px-6 py-4">
-                                    <a href="#"
+                                    <a href="{{ route('clinic.edit', $clinic) }}"
                                         class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
                                 </td>
                             </tr>
