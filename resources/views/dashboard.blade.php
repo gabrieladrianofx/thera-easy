@@ -67,18 +67,10 @@
         <x-table>
             <thead class="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
-                    <th scope="col" class="px-6 py-3">
-                        Name of The Clinic
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        CNPJ
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Email
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Actions
-                    </th>
+                    <x-table.thead-th>Name of The Clinic</x-table.thead-th>
+                    <x-table.thead-th>CNPJ</x-table.thead-th>
+                    <x-table.thead-th>Email</x-table.thead-th>
+                    <x-table.thead-th>Actions</x-table.thead-th>
                 </tr>
             </thead>
             <tbody>
