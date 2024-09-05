@@ -64,46 +64,44 @@
         {{-- listagem --}}
         <div class="dark: mb-1 font-bold uppercase text-gray-400">List of Clinics</div>
 
-        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-            <table class="w-full text-left text-sm text-gray-500 rtl:text-right dark:text-gray-400">
-                <thead class="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                        <th scope="col" class="px-6 py-3">
-                            Name of The Clinic
+        <x-table>
+            <thead class="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3">
+                        Name of The Clinic
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        CNPJ
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Email
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($clinics as $clinic)
+                    <tr
+                        class="border-b odd:bg-white even:bg-gray-50 dark:border-gray-700 odd:dark:bg-gray-900 even:dark:bg-gray-800">
+                        <th scope="row"
+                            class="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                            {{ $clinic->name_clinic }}
                         </th>
-                        <th scope="col" class="px-6 py-3">
-                            CNPJ
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Email
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Actions
-                        </th>
+                        <td class="px-6 py-4">
+                            {{ $clinic->CNPJ }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ $clinic->email }}
+                        </td>
+                        <td class="px-6 py-4">
+                            <a href="{{ route('clinic.edit', $clinic) }}"
+                                class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach ($clinics as $clinic)
-                        <tr
-                            class="border-b odd:bg-white even:bg-gray-50 dark:border-gray-700 odd:dark:bg-gray-900 even:dark:bg-gray-800">
-                            <th scope="row"
-                                class="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                                {{ $clinic->name_clinic }}
-                            </th>
-                            <td class="px-6 py-4">
-                                {{ $clinic->CNPJ }}
-                            </td>
-                            <td class="px-6 py-4">
-                                {{ $clinic->email }}
-                            </td>
-                            <td class="px-6 py-4">
-                                <a href="{{ route('clinic.edit', $clinic) }}"
-                                    class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
+                @endforeach
+            </tbody>
+        </x-table>
     </x-container-layout>
 </x-app-layout>
