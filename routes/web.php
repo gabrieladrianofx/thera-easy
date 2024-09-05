@@ -16,6 +16,7 @@ Route::get('/', function () {
 Route::get('/dashboard', DashboardController::class)->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::post('/clinic/store', [ClinicController::class, 'store'])->name('clinic.store');
+Route::get('/clinic/{clinic}/edit', [ClinicController::class, 'edit'])->name('clinic.edit');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
