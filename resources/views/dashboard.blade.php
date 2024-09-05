@@ -78,16 +78,12 @@
                     <tr
                         class="border-b odd:bg-white even:bg-gray-50 dark:border-gray-700 odd:dark:bg-gray-900 even:dark:bg-gray-800">
                         <x-table.tbody-th>{{ $clinic->name_clinic }}</x-table.tbody-th>
-                        <td class="px-6 py-4">
-                            {{ $clinic->CNPJ }}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{ $clinic->email }}
-                        </td>
-                        <td class="px-6 py-4">
+                        <x-table.tbody-td>{{ $clinic->CNPJ }}</x-table.tbody-td>
+                        <x-table.tbody-td>{{ $clinic->email }}</x-table.tbody-td>
+                        <x-table.tbody-td>
                             <a href="{{ route('clinic.edit', $clinic) }}"
                                 class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
-                        </td>
+                        </x-table.tbody-td>
                     </tr>
                 @endforeach
             </tbody>
