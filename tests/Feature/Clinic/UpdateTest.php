@@ -84,3 +84,17 @@ it('should not be updated when a duplicate email exists.', function () {
 
     assertDatabaseCount('clinics', 1);
 });
+
+it('should not update when the email is not of the email type.', function () {
+    $user   = User::factory()->create();
+    $clinic = Clinic::factory()->create(['email' => 'jon.doe@example.com']);
+
+    actingAs($user);
+
+    put(
+        route('clinic.update', $clinic),
+        ['email' => 'jon.doeexample.com']
+    )->assertSessionHasErrors('email');
+
+    assertDatabaseCount('clinics', 1);
+});
