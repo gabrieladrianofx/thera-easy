@@ -70,3 +70,17 @@ it('should not be updated until the CNPJ size is between 13 and 15 characters', 
 
     assertDatabaseCount('clinics', 1);
 });
+
+it('should not be updated when a duplicate email exists.', function () {
+    $user   = User::factory()->create();
+    $clinic = Clinic::factory()->create(['email' => 'jon.doe@example.com']);
+
+    actingAs($user);
+
+    put(
+        route('clinic.update', $clinic),
+        ['email' => 'jon.doe@example.com']
+    )->assertSessionHasErrors('email');
+
+    assertDatabaseCount('clinics', 1);
+});

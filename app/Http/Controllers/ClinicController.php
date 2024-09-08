@@ -29,6 +29,7 @@ class ClinicController extends Controller
         request()->validate([
             'name_clinic' => ['required'],
             'CNPJ'        => ['required', 'unique:clinics', 'size:14'],
+            'email'       => ['required', 'unique:clinics', 'email'],
         ]);
 
         $clinic->update([
