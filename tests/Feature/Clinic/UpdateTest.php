@@ -35,3 +35,14 @@ it('should not be updated while name_clinic is empty.', function () {
 
     assertDatabaseCount('clinics', 1);
 });
+
+it('should not be updated while there exists a duplicate CNPJ.', function () {
+    $user   = User::factory()->create();
+    $clinic = Clinic::factory()->create(['CNPJ' => str_repeat('5', 14)]);
+
+    actingAs($user);
+
+    put(route('clinic.update', $clinic), ['CNPJ' => str_repeat('5', 14)])->assertSessionHasErrors('CNPJ');
+
+    assertDatabaseCount('clinics', 1);
+});
