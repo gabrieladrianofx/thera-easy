@@ -46,3 +46,27 @@ it('should not be updated while there exists a duplicate CNPJ.', function () {
 
     assertDatabaseCount('clinics', 1);
 });
+
+it('should not be updated until the CNPJ size is between 13 and 15 characters', function () {
+    $user   = User::factory()->create();
+    $clinic = Clinic::factory()->create(['CNPJ' => str_repeat('4', 14)]);
+
+    actingAs($user);
+
+    put(
+        route('clinic.update', $clinic),
+        ['CNPJ' => str_repeat('5', 14)]
+    )->assertRedirect();
+
+    put(
+        route('clinic.update', $clinic),
+        ['CNPJ' => str_repeat('5', 13)]
+    )->assertSessionHasErrors('CNPJ');
+
+    put(
+        route('clinic.update', $clinic),
+        ['CNPJ' => str_repeat('5', 15)]
+    )->assertSessionHasErrors('CNPJ');
+
+    assertDatabaseCount('clinics', 1);
+});
