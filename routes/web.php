@@ -15,6 +15,7 @@ Route::get('/', function () {
 
 Route::get('/dashboard', DashboardController::class)->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/clinic', [ClinicController::class, 'index'])->name('clinic.index');
 Route::post('/clinic/store', [ClinicController::class, 'store'])->name('clinic.store');
 Route::get('/clinic/{clinic}/edit', [ClinicController::class, 'edit'])->name('clinic.edit');
 Route::put('/clinic/{clinic}', [ClinicController::class, 'update'])->name('clinic.update');

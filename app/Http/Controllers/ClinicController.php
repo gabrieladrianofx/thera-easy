@@ -9,6 +9,13 @@ use Illuminate\Validation\Rule;
 
 class ClinicController extends Controller
 {
+    public function index(): View
+    {
+        return view('clinic.index', [
+            'clinics' => Clinic::all(),
+        ]);
+    }
+
     public function edit(Clinic $clinic): View
     {
         return view('clinic.edit', compact('clinic'));
