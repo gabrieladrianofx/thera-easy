@@ -40,6 +40,6 @@ class ClinicController extends Controller
             'email'       => ['required',  Rule::unique('clinics', 'email')->ignore($clinic->id), 'email'],
         ]));
 
-        return to_route('dashboard');
+        return to_route('clinic.index');
     }
 }
