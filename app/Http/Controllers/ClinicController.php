@@ -26,10 +26,15 @@ class ClinicController extends Controller
 
     public function update(Clinic $clinic): RedirectResponse
     {
-        $clinic->name_clinic = request()->name_clinic;
-        $clinic->CNPJ        = request()->CNPJ;
-        $clinic->email       = request()->email;
-        $clinic->save();
+        request()->validate([
+            'name_clinic' => ['required'],
+        ]);
+
+        $clinic->update([
+            'name_clinic' => request()->name_clinic,
+            'CNPJ'        => request()->CNPJ,
+            'email'       => request()->email,
+        ]);
 
         return to_route('dashboard');
     }
