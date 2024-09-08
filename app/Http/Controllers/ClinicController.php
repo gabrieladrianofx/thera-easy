@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Clinic;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Validation\Rule;
 
 class ClinicController extends Controller
 {
@@ -26,10 +27,10 @@ class ClinicController extends Controller
 
     public function update(Clinic $clinic): RedirectResponse
     {
-        Clinic::query()->update(request()->validate([
+        $clinic->update(request()->validate([
             'name_clinic' => ['required'],
-            'CNPJ'        => ['required', 'unique:clinics', 'size:14'],
-            'email'       => ['required', 'unique:clinics', 'email'],
+            'CNPJ'        => ['required',  Rule::unique('clinics', 'CNPJ')->ignore($clinic->id), 'size:14'],
+            'email'       => ['required',  Rule::unique('clinics', 'email')->ignore($clinic->id), 'email'],
         ]));
 
         return to_route('dashboard');
