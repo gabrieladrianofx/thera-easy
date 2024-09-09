@@ -83,6 +83,13 @@
                         <x-table.tbody-td>
                             <a href="{{ route('clinic.edit', $clinic) }}"
                                 class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
+                            <x-form :action="route('clinic.destroy', $clinic)" delete
+                                onsubmit="return confirm('Tem certeza que deseja deletar?')">
+                                <button type="submit"
+                                    class="font-medium text-blue-600 hover:underline dark:text-blue-500">
+                                    Delete
+                                </button>
+                            </x-form>
                         </x-table.tbody-td>
                     </tr>
                 @endforeach
