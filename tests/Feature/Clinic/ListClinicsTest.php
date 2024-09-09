@@ -10,12 +10,13 @@ it('should list all the clinics', function () {
 
     actingAs($user);
 
-    $response = get(route('dashboard'));
+    $response = get(route('clinic.index'));
 
     foreach ($clinics as $clinic) {
         $response->assertSee([
             'name_clinic' => $clinic->name_clinic,
             'CNPJ'        => $clinic->CNPJ,
+            'email'       => $clinic->email,
         ]);
     }
 });

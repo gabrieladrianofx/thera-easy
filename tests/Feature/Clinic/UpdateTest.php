@@ -15,7 +15,7 @@ it('should be able to update a clinic', function () {
         'name_clinic' => 'Clinical OffShore',
         'CNPJ'        => str_repeat('5', 14),
         'email'       => 'clinicaloffshore@example.com',
-    ])->assertRedirect(route('dashboard'));
+    ])->assertRedirect(route('clinic.index'));
 
     $clinic->refresh();
 
