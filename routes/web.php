@@ -19,6 +19,7 @@ Route::get('/clinic', [ClinicController::class, 'index'])->name('clinic.index');
 Route::post('/clinic/store', [ClinicController::class, 'store'])->name('clinic.store');
 Route::get('/clinic/{clinic}/edit', [ClinicController::class, 'edit'])->name('clinic.edit');
 Route::put('/clinic/{clinic}', [ClinicController::class, 'update'])->name('clinic.update');
+Route::delete('/clinic/{clinic}', [ClinicController::class, 'destroy'])->name('clinic.destroy');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

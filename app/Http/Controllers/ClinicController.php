@@ -42,4 +42,11 @@ class ClinicController extends Controller
 
         return to_route('clinic.index');
     }
+
+    public function destroy(Clinic $clinic): RedirectResponse
+    {
+        $clinic->delete();
+
+        return back();
+    }
 }
