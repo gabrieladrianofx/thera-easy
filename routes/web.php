@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\{ClinicController, DashboardController, ProfileController};
+use App\Http\Controllers\{ClinicController, DashboardController, PatientController, ProfileController};
 use Illuminate\Support\Facades\{Auth, Route};
 
 Route::get('/', function () {
@@ -20,6 +20,8 @@ Route::post('/clinic/store', [ClinicController::class, 'store'])->name('clinic.s
 Route::get('/clinic/{clinic}/edit', [ClinicController::class, 'edit'])->name('clinic.edit');
 Route::put('/clinic/{clinic}', [ClinicController::class, 'update'])->name('clinic.update');
 Route::delete('/clinic/{clinic}', [ClinicController::class, 'destroy'])->name('clinic.destroy');
+
+Route::post('patient.store', [PatientController::class, 'store'])->name('patient.store');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
