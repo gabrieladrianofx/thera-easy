@@ -28,3 +28,21 @@ it('should be possible to register a patient only when their name has a minimum 
     ]);
     assertDatabaseCount('patients', 1);
 });
+
+it('should be able to register patients only when CPF contains exactly 11 digits.', function () {
+    $user = User::factory()->create();
+    actingAs($user);
+
+    post(route('patient.store', [
+        'CPF'          => str_repeat('1', 11),
+        'name_patient' => str_repeat('*', 150),
+    ]))->assertRedirect();
+
+    post(route('patient.store', [
+        'CPF'          => str_repeat('1', 12),
+        'name_patient' => str_repeat('*', 150),
+    ]))->assertSessionHasErrors(['CPF' => __('validation.size.string', ['size' => 11, 'attribute' => 'c p f'])]);
+
+    assertDatabaseHas('patients', ['CPF' => str_repeat('1', 11)]);
+    assertDatabaseCount('patients', 1);
+});
