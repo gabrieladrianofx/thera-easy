@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\{CivilStatus, GenderStatus};
 use App\Models\Patient;
+use App\Rules\SameCPFRule;
 use Closure;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Validation\Rule;
@@ -13,7 +14,7 @@ class PatientController extends Controller
     public function store(): RedirectResponse
     {
         Patient::query()->create(request()->validate([
-            'CPF'            => ['required', 'size:11'],
+            'CPF'            => ['required', 'size:11', new SameCPFRule()],
             'name_patient'   => 'required|between:3,255',
             'gender'         => ['nullable', Rule::enum(GenderStatus::class)],
             'civil_status'   => ['nullable', Rule::enum(CivilStatus::class)],
