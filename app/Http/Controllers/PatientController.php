@@ -37,8 +37,6 @@ class PatientController extends Controller
         ]);
 
         $patient = Patient::query()->create($validatedPatient);
-        // dd($patient->addresses()->create());
-        $validatedAddress['belongs_to_patient'] = $patient->id;
         $patient->addresses()->create($validatedAddress);
 
         return back();
