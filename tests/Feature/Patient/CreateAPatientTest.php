@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\GenderStatus;
 use App\Models\User;
 
 use function Pest\Laravel\{actingAs, assertDatabaseCount, assertDatabaseHas, post};
@@ -62,5 +63,27 @@ it('CPF should be unique', function () {
     ]))->assertSessionHasErrors(['CPF' => 'There is already a patient registered with this CPF.']);
 
     assertDatabaseHas('patients', ['CPF' => str_repeat('1', 11)]);
+    assertDatabaseCount('patients', 1);
+});
+
+it('should allow registering a patient when the gender field is informed with the correct data', function () {
+    $user = User::factory()->create();
+    actingAs($user);
+
+    post(route('patient.store', [
+        'CPF'          => str_repeat('1', 11),
+        'name_patient' => str_repeat('*', 150),
+        'gender'       => GenderStatus::Female->value,
+    ]))->assertRedirect();
+
+    post(route('patient.store', [
+        'CPF'          => str_repeat('1', 11),
+        'name_patient' => str_repeat('*', 150),
+        'gender'       => 'homosexual',
+    ]))->assertSessionHasErrors('gender');
+
+    assertDatabaseHas('patients', [
+        'gender' => GenderStatus::Female->value,
+    ]);
     assertDatabaseCount('patients', 1);
 });
