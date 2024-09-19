@@ -1,6 +1,6 @@
 <?php
 
-use App\Enums\GenderStatus;
+use App\Enums\{CivilStatus, GenderStatus};
 use App\Models\User;
 
 use function Pest\Laravel\{actingAs, assertDatabaseCount, assertDatabaseHas, post};
@@ -84,6 +84,28 @@ it('should allow registering a patient when the gender field is informed with th
 
     assertDatabaseHas('patients', [
         'gender' => GenderStatus::Female->value,
+    ]);
+    assertDatabaseCount('patients', 1);
+});
+
+it('should allow registering a patient when the marital status field is informed with the correct data', function () {
+    $user = User::factory()->create();
+    actingAs($user);
+
+    post(route('patient.store', [
+        'CPF'          => str_repeat('1', 11),
+        'name_patient' => str_repeat('*', 150),
+        'civil_status' => CivilStatus::Single->value,
+    ]))->assertRedirect();
+
+    post(route('patient.store', [
+        'CPF'          => str_repeat('1', 11),
+        'name_patient' => str_repeat('*', 150),
+        'civil_status' => 'others_civil_status',
+    ]))->assertSessionHasErrors('civil_status');
+
+    assertDatabaseHas('patients', [
+        'civil_status' => CivilStatus::Single->value,
     ]);
     assertDatabaseCount('patients', 1);
 });
