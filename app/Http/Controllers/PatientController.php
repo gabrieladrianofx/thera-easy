@@ -13,7 +13,7 @@ class PatientController extends Controller
 {
     public function store(): RedirectResponse
     {
-        Patient::query()->create(request()->validate([
+        $validatedPatient = request()->validate([
             'CPF'            => ['required', 'size:11', new SameCPFRule()],
             'name_patient'   => 'required|between:3,255',
             'gender'         => ['nullable', Rule::enum(GenderStatus::class)],
@@ -27,7 +27,19 @@ class PatientController extends Controller
                     }
                 },
             ],
-        ]));
+        ]);
+
+        $validatedAddress = request()->validate([
+            'street_address' => 'required|min:10',
+            'street_number'  => 'required|min:2|max:7',
+            'district'       => 'required',
+            'city'           => 'required',
+        ]);
+
+        $patient = Patient::query()->create($validatedPatient);
+        // dd($patient->addresses()->create());
+        $validatedAddress['belongs_to_patient'] = $patient->id;
+        $patient->addresses()->create($validatedAddress);
 
         return back();
     }
