@@ -7,6 +7,7 @@ use App\Models\Patient;
 use App\Rules\SameCPFRule;
 use Closure;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class PatientController extends Controller
@@ -36,8 +37,10 @@ class PatientController extends Controller
             'city'           => 'required',
         ]);
 
-        $patient = Patient::query()->create($validatedPatient);
-        $patient->addresses()->create($validatedAddress);
+        DB::transaction(function () use ($validatedPatient, $validatedAddress) {
+            $patient = Patient::query()->create($validatedPatient);
+            $patient->addresses()->create($validatedAddress);
+        });
 
         return back();
     }
